@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -30,4 +31,10 @@ public class StateWiseTestingDetails {
 
     @Column(name = "positive_samples")
     private Double positiveSamples;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 }

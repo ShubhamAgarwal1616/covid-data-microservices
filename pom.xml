@@ -48,6 +48,21 @@
 			<version>2.4.4</version>
 		</dependency>
 
+<!--		To read .xls or .xlsx files-->
+		<dependency>
+			<groupId>com.github.ozlerhakan</groupId>
+			<artifactId>poiji</artifactId>
+			<version>3.1.4</version>
+		</dependency>
+
+<!--		To read .csv files-->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.0</version>
+		</dependency>
+		
+<!--		For postgresql database connection-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>

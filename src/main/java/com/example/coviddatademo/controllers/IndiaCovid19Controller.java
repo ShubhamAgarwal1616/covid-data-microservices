@@ -6,10 +6,7 @@ import com.example.coviddatademo.services.IndiaCovid19Service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +18,8 @@ public class IndiaCovid19Controller {
     private final IndiaCovid19Service indiaDataService;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/{state}")
-    public ResponseEntity<List<IndiaCovid19Response>> getIndiaDataByState(@PathVariable("state") String state) {
+    @GetMapping("/state")
+    public ResponseEntity<List<IndiaCovid19Response>> getIndiaDataByState(@RequestParam(name = "name", required = false) String state) {
         List<IndiaCovid19Data> data = indiaDataService.getAllByState(state);
         List<IndiaCovid19Response> list = new ArrayList<>();
         for (IndiaCovid19Data d : data) {
