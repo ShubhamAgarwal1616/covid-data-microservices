@@ -9,7 +9,7 @@
     - docker run --name psql2 -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
 
 - ##### test container and run sql commands
-    - docker exec -it psql1 bash
+    - docker exec -it psql2 bash
     - su postgres
     - psql
     - \conninfo (to get connection info)
@@ -34,3 +34,7 @@
 - ##### gradle Application
     - ./gradlew bootRun ( to run application )
     - ./gradlew build ( to build jar file )
+    
+#### Authentication docs
+   - https://www.javainuse.com/webseries/spring-security-jwt/chap4 (related to curr implementation)
+   - https://www.javainuse.com/spring/boot-jwt
