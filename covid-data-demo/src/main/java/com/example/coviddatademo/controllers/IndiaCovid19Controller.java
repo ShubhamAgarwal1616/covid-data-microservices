@@ -19,7 +19,7 @@ public class IndiaCovid19Controller {
     private final ModelMapper modelMapper;
 
     @GetMapping("/state")
-    public ResponseEntity<List<IndiaCovid19Response>> getIndiaDataByState(@RequestParam(name = "name", required = false) String state) {
+    public ResponseEntity<List<IndiaCovid19Response>> getIndiaDataByState(@RequestParam(name = "name", required = true) String state) {
         List<IndiaCovid19Data> data = indiaDataService.getAllByState(state);
         List<IndiaCovid19Response> list = new ArrayList<>();
         for (IndiaCovid19Data d : data) {

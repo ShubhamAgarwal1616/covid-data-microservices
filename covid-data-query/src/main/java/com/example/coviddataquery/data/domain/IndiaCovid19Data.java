@@ -1,7 +1,10 @@
-package com.example.coviddatademo.responses;
+package com.example.coviddataquery.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +13,10 @@ import java.util.UUID;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IndiaCovid19Response {
+@JsonIgnoreProperties
+@NoArgsConstructor
+@AllArgsConstructor
+public class IndiaCovid19Data {
     private UUID id;
     private LocalDate date;
     private LocalTime time;
