@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TokenHelper {
     private final JwtProperties jwtProperties;
     private static final String AUDIENCE_WEB = "web";
@@ -27,7 +29,7 @@ public class TokenHelper {
             }
             username = claims.getSubject();
         } catch (Exception e) {
-//            log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return username;
     }
@@ -54,6 +56,27 @@ public class TokenHelper {
                 .setExpiration(generateExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, jwtProperties.getSecret())
                 .compact();
+    }
+
+    public String refreshToken(String token) {
+        String refreshedToken;
+        Date a = new Date();
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            if (claims == null) {
+                return null;
+            }
+            claims.setIssuedAt(a);
+            refreshedToken = Jwts.builder()
+                    .setClaims(claims)
+                    .setExpiration(generateExpirationDate())
+                    .signWith(SIGNATURE_ALGORITHM, jwtProperties.getSecret())
+                    .compact();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+        return refreshedToken;
     }
 
     private Date generateExpirationDate() {

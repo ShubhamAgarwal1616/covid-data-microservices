@@ -6,7 +6,7 @@
  #### Set up postgresql server image
 - ##### pull an run image
     - docker pull postgres:latest
-    - docker run --name psql2 -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
+    - docker run --name psql2 -e POSTGRES_PASSWORD=password -p 5433:5432 -d postgres
 
 - ##### test container and run sql commands
     - docker exec -it psql2 bash
