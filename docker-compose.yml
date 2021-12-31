@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  postgres_data_db:
+  postgres-data-db:
     container_name: psql1
     image: postgres:latest
     restart: always
@@ -18,10 +18,8 @@ services:
       APP_DB_NAME: covid_data
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
-    ports:
-      - 5432:5432
 
-  postgres_auth_db:
+  postgres-auth-db:
     container_name: psql2
     image: postgres:latest
     restart: always
@@ -38,5 +36,33 @@ services:
       APP_DB_NAME: authorisation
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
+
+  covid-data-microservice:
+    container_name: data_app
+    build:
+      dockerfile: Dockerfile
+      context: covid-data-demo
+    environment:
+      POSTGRES_HOST: postgres-data-db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: covid_user
+      POSTGRES_PASSWORD: covid_password
+    depends_on:
+      - postgres-data-db
+
+  covid-data-query-microservice:
+    container_name: query_app
+    build:
+      dockerfile: Dockerfile
+      context: covid-data-query
+    environment:
+      POSTGRES_HOST: postgres-auth-db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: covid_user
+      POSTGRES_PASSWORD: covid_password
+      DATA_SERVICE_HOST: 'http://covid-data-microservice:8080'
+    depends_on:
+      - postgres-auth-db
+      - covid-data-microservice
     ports:
-      - 5433:5432
+      - 8081:8081
