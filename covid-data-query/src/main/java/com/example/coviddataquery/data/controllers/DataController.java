@@ -4,6 +4,7 @@ import com.example.coviddataquery.data.domain.IndiaCovid19Data;
 import com.example.coviddataquery.data.responses.IndiaCovid19Response;
 import com.example.coviddataquery.security.annotations.AnyAuthenticatedUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,12 @@ import java.util.Arrays;
 public class DataController {
     private final RestTemplate restTemplate;
 
+    @Value("${covid.rest.api.data-service-host}")
+    private String dataServiceHost;
+
     @GetMapping("/india-covid-19/state")
     public ResponseEntity<IndiaCovid19Response> getIndiaDataByState(@RequestParam(name = "name", required = true) String state) throws URISyntaxException {
-        URI uri = new URI("http://localhost:8080/api/india-covid-19/state?name=Kerala");
+        URI uri = new URI(dataServiceHost + "/api/india-covid-19/state?name=Kerala");
         IndiaCovid19Data[] data = restTemplate.getForObject(uri, IndiaCovid19Data[].class);
         return ResponseEntity.ok(new IndiaCovid19Response(Arrays.asList(data)));
     }
