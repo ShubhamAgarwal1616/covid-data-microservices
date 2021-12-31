@@ -1,9 +1,13 @@
- #### Set up microsoft sql server image
+#### Run Application
+- Start a postgres db container and create a database required by app (authorisation) using commands mentioned in `Set up postgresql server image` section
+- Run spring boot app using command line commands in `Run spring boot application from command line`
+ 
+#### Set up microsoft sql server image
   https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash
  - docker pull mcr.microsoft.com/mssql/server:2019-latest
  - docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=password" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
  
- #### Set up postgresql server image
+#### Set up postgresql server image
 - ##### pull an run image
     - docker pull postgres:latest
     - docker run --name psql2 -e POSTGRES_PASSWORD=password -p 5433:5432 -d postgres
@@ -12,6 +16,7 @@
     - docker exec -it psql2 bash
     - su postgres
     - psql
+    - CREATE DATABASE <db name>
     - \conninfo (to get connection info)
     - \q (to quit)
     - \l (get all databases)

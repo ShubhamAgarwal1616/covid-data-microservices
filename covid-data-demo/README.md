@@ -1,3 +1,7 @@
+#### Run Application
+- Start a postgres db container and create a database required by app (covid_data) using commands mentioned in `Set up postgresql server image` section
+- Run spring boot app using command line commands in `Run spring boot application from command line`
+ 
  #### Set up microsoft sql server image
   https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash
  - docker pull mcr.microsoft.com/mssql/server:2019-latest
@@ -12,6 +16,7 @@
     - docker exec -it psql1 bash
     - su postgres
     - psql
+    - CREATE DATABASE <db name>
     - \conninfo (to get connection info)
     - \q (to quit)
     - \l (get all databases)

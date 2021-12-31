@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  postgres_data_db:
+    container_name: psql1
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      APP_DB_USER: covid_user
+      APP_DB_PASS: covid_password
+      APP_DB_NAME: covid_data
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+
+  postgres_auth_db:
+    container_name: psql2
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      APP_DB_USER: covid_user
+      APP_DB_PASS: covid_password
+      APP_DB_NAME: authorisation
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5433:5432
